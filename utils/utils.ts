@@ -17,3 +17,7 @@ export const navigateToOrigin = () => navigateTo('/');
 export const makeInitials = (name: string) => {
     return name.split(' ').slice(0, 2).map(word => word.at(0)?.toUpperCase()).join('');
 }
+
+export const isCurrentPath = (currentPath: string, destinationPath: string) => {
+    return currentPath === destinationPath;
+};

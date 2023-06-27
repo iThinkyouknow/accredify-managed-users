@@ -5,38 +5,50 @@
         </div>
         <div class="mt-10">
             <NuxtLink v-for="menuItem in menuBar" :key="menuItem.link" :title="menuItem.description" :to="menuItem.link"
-                class="w-15 h-15 flex items-center justify-center cursor-pointer hover:bg-white/10">
+                class="w-15 h-15 flex items-center justify-center cursor-pointer hover:bg-white/10"
+                :class="{ 'bg-white/10': menuItem.isCurrent }">
                 <component :is="menuItem.icon"></component>
             </NuxtLink>
         </div>
     </div>
 </template>
 <script setup lang="ts">
-const menuBar = computed(() => [
-    {
-        icon: resolveComponent('SvgHome'),
-        description: 'Home',
-        link: '/' // todo: change this route
-    },
-    {
-        icon: resolveComponent('SvgDocument'),
-        description: 'Documents',
-        link: '/documents'
-    },
-    {
-        icon: resolveComponent('SvgLightbulb'),
-        description: 'Ideas',
-        link: '/ideas'
-    },
-    {
-        icon: resolveComponent('SvgShield'),
-        description: 'Security',
-        link: '/security'
-    },
-    {
-        icon: resolveComponent('SvgGear'),
-        description: 'Settings',
-        link: '/settings'
-    },
-])
+const route = useRoute();
+const user = useUser();
+
+const menuBar = computed(() => {
+    const dashboardPath = `/authed/user/${user.value?.id ?? ''}/dashboard`;
+    return [
+        {
+            icon: resolveComponent('SvgHome'),
+            description: 'Home',
+            link: dashboardPath,
+            isCurrent: isCurrentPath(route.path, dashboardPath)
+        },
+        {
+            icon: resolveComponent('SvgDocument'),
+            description: 'Documents',
+            link: '/documents',
+            isCurrent: isCurrentPath(route.path, '/documents')
+        },
+        {
+            icon: resolveComponent('SvgLightbulb'),
+            description: 'Ideas',
+            link: '/ideas',
+            isCurrent: isCurrentPath(route.path, '/ideas')
+        },
+        {
+            icon: resolveComponent('SvgShield'),
+            description: 'Security',
+            link: '/security',
+            isCurrent: isCurrentPath(route.path, '/security')
+        },
+        {
+            icon: resolveComponent('SvgGear'),
+            description: 'Settings',
+            link: '/settings',
+            isCurrent: isCurrentPath(route.path, '/settings')
+        },
+    ]
+})
 </script>
