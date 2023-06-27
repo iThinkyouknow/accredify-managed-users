@@ -53,7 +53,7 @@ td {
                             </div>
 
                         </td>
-                        <td>
+                        <td class="received-on">
                             <Text14>
                                 {{ document.received_on_display }}
                             </Text14>

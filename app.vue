@@ -17,25 +17,9 @@
 </template>
 
 <script setup lang="ts">
-import { userResponseValidator } from './types/types';
+
 const auth = useAuth();
 const user = useUser();
-const route = useRoute();
-
-const getUserData = async () => {
-  try {
-    const userData = await $fetch('/user-module/identities/1/user');
-    userResponseValidator.parse(userData);
-    user.value = userData.data
-    if (route.path === '/') {
-      navigateTo(`/authed/user/${user.value.id}/dashboard`)
-    }
-  } catch (error) {
-    console.error(error);
-    alert('Unable to get user');
-    navigateToOrigin();
-  }
-}
 
 const resetState = () => {
   user.value = null;
@@ -46,7 +30,5 @@ watch(auth, () => {
     resetState();
     return;
   }
-
-  getUserData();
 }, { immediate: true })
 </script>

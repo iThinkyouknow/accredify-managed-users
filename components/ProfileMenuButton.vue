@@ -1,5 +1,5 @@
 <template>
-    <div class="relative" v-click-outside="closePopup">
+    <div id="profile-button" class="relative" v-click-outside="closePopup">
         <TopRightButtonWrapper @click="togglePopup" class="flex items-center gap-2 ">
             <div class="rounded-full overflow-hidden bg-493DF5 w-6 h-6">
                 <img v-if="profileImg" class="w-6 h-6 object-cover	" :src="profileImg" alt="profile" />

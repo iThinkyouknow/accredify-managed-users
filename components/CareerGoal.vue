@@ -1,5 +1,5 @@
 <template>
-    <div class="left w-64">
+    <div id="career-goal" class="left w-64">
         <Text20Bold>
             Career Goal
         </Text20Bold>

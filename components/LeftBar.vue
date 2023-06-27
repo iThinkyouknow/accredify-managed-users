@@ -5,7 +5,7 @@
         </div>
         <div class="mt-10">
             <NuxtLink v-for="menuItem in menuBar" :key="menuItem.link" :title="menuItem.description" :to="menuItem.link"
-                class="w-15 h-15 flex items-center justify-center cursor-pointer hover:bg-white/10"
+                class="menu-items w-15 h-15 flex items-center justify-center cursor-pointer hover:bg-white/10"
                 :class="{ 'bg-white/10': menuItem.isCurrent }">
                 <component :is="menuItem.icon"></component>
             </NuxtLink>
