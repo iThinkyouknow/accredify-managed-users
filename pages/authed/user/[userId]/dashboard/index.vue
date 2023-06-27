@@ -22,7 +22,7 @@ td {
             </section>
 
             <section id="managed-dashboard-content" class="flex gap-6 mt-8">
-                <div class="left w-64">
+                <div v-if="careersDisplay" class="left w-64">
                     <Text20Bold>
                         Career Goal
                     </Text20Bold>
@@ -31,7 +31,7 @@ td {
                             <Text14Bold5B6270 class="text-center">
                                 Your Progress
                             </Text14Bold5B6270>
-                            <CircularProgress percent="35">
+                            <CircularProgress :percent="careersDisplay.progress">
 
                             </CircularProgress>
                             <div>
@@ -39,7 +39,7 @@ td {
                                     I want to become a
                                 </Text14>
                                 <Text20Bold class="text-center">
-                                    Tax Manager
+                                    {{ careersDisplay.name }}
                                 </Text20Bold>
                             </div>
                             <LinkEl url="">
@@ -79,21 +79,21 @@ td {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="border-b border-D0D2D6">
+                                    <tr v-for="document in documentsDisplay" :key="document.id"
+                                        class="border-b border-D0D2D6">
                                         <td>
                                             <div class="flex items-center gap-2">
                                                 <SvgDocument fill="#493DF5"></SvgDocument>
                                                 <Text14Bold151F32 class="ml-2">
 
-                                                    Degree In Information Systems
+                                                    {{ document.document_name }}
                                                 </Text14Bold151F32>
                                             </div>
 
                                         </td>
                                         <td>
                                             <Text14>
-
-                                                29 Jun 2021
+                                                {{ document.received_on_display }}
                                             </Text14>
                                         </td>
                                         <td>
@@ -112,6 +112,60 @@ td {
     </MainContent>
 </template>
 <script setup lang="ts">
+const user = useUser();
 
+const documents = ref();
+const careers = ref();
+
+const getDocuments = async () => {
+    if (!user.value?.id) return;
+    try {
+        const { data } = await $fetch(`/document-module/identities/${user.value.id}/documents`)
+        documents.value = data;
+    } catch (error) {
+        console.error(error);
+        alert('Unable to get your documents')
+    }
+};
+
+const getCareers = async () => {
+    if (!user.value?.id) return;
+    try {
+        const { data } = await $fetch(`/career-module/identities/${user.value.id}/careers`);
+        careers.value = data;
+
+
+    } catch (error) {
+        console.error(error);
+        alert('Unable to get your Career Path')
+    }
+}
+
+watch(user, () => {
+    if (user.value) {
+        getDocuments();
+        getCareers();
+        return;
+    }
+    navigateToOrigin();
+}, { immediate: true })
+
+const documentsDisplay = computed(() => {
+    const data = documents?.value;
+    if (!documents.value || !Array.isArray(data)) return [];
+
+    return data.map(document => {
+        return {
+            ...document,
+            received_on_display: formatUTCDateTimeStrToddMMMyyyy(document.received_on)
+        }
+    }).sort((a, b) => +(new Date(b.received_on ?? 0)) - +(new Date(a.received_on ?? 0)))
+})
+
+const careersDisplay = computed(() => {
+    const data = careers?.value;
+    if (!careersDisplay || !Array.isArray(data) || !data.length) return null;
+    return data[0]
+});
 
 </script>
