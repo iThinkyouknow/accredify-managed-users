@@ -16,6 +16,7 @@
     "typescript": "latest"
   },
   "dependencies": {
-    "vue3-circle-progress": "^1.0.7"
+    "vue3-circle-progress": "^1.0.7",
+    "zod": "^3.21.4"
   }
 }
