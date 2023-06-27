@@ -3,7 +3,7 @@
         <Header>
             <template v-slot:right>
                 <LoginButton @click="login" v-if="!user?.id"></LoginButton>
-                <ProfileMenuButton v-if="user?.id" :profile-img="userDisplay.profileImg"
+                <ProfileMenuButton v-if="user?.id" :profile-img="userDisplay.profileImg ?? ''"
                     :profile-name="userDisplay.profileName" :profile-type="userDisplay.profileType"
                     @logout-pressed="logout">
                 </ProfileMenuButton>
@@ -28,7 +28,7 @@ const userDisplay = computed(() => {
     return {
         profileImg: userV.profile_picture_url,
         profileName: userV.name,
-        profileType: userV.current_organisation.is_personal ? 'Personal' : 'Managed'
+        profileType: userV.current_organisation?.is_personal ? 'Personal' : 'Managed'
     }
 })
 const logout = () => {

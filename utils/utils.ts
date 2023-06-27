@@ -7,7 +7,7 @@ const dateTimeOptions = {
 
 const dateTimeFormatter = new Intl.DateTimeFormat(undefined, dateTimeOptions);
 
-export const formatUTCDateTimeStrToddMMMyyyy = (dateStr: string | null) => {
+export const formatUTCDateTimeStrToddMMMyyyy = (dateStr?: string | null) => {
     if (!dateStr) return '';
     return dateTimeFormatter.format(new Date(dateStr));
 }

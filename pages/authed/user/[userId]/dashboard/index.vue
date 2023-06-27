@@ -8,7 +8,7 @@
             </section>
 
             <section id="managed-dashboard-content" class="flex gap-6 mt-10">
-                <CareerGoal v-if="careersDisplay && !user?.current_organisation.is_personal"
+                <CareerGoal v-if="careersDisplay && !user?.current_organisation?.is_personal"
                     :progress="careersDisplay.progress" :career-name="careersDisplay.name" />
 
                 <div class="right flex-1">
@@ -28,7 +28,7 @@ const documents = ref<z.infer<typeof documentsResponseValidatorData>>([]);
 const careers = ref<z.infer<typeof careerResponseValidatorData> | undefined>();
 
 const subtitle = computed(() => {
-    const userOrganization = user.value.current_organisation;
+    const userOrganization = user.value?.current_organisation;
     const preText = 'Manage your documents';
     return userOrganization && userOrganization?.name && !userOrganization.is_personal
         ? `${preText} issued by ${user.value?.current_organisation?.name} or track your career goal.`
