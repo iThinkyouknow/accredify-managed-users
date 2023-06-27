@@ -24,6 +24,7 @@ const route = useRoute();
 const getUserData = async () => {
   try {
     const userData = await $fetch('/user-module/identities/1/user');
+    user.value = userData.data
     if (route.path === '/') {
       navigateTo(`/authed/user/${user.value.id}/dashboard`)
     }
