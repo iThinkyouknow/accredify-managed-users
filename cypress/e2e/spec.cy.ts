@@ -1,5 +1,5 @@
 
-const personal_managed_common = () => {
+const personalManagedCommon = () => {
     cy.get('.menu-items').should('have.length', 5)
     const dates: string[] = [];
     cy
@@ -12,8 +12,9 @@ const personal_managed_common = () => {
         const sortedDates = dates.slice().sort((a, b) => +(new Date(b)) - +(new Date(a)))
         expect(dates).to.eql(sortedDates);
       });
+}
 
-    cy.get('#profile-button').click();
+const logoutClicked = () => {
     cy.get('#profile-options').find('#logout-button').click();
     cy.wait(500);
     cy.url().should('be.equals', 'http://localhost:3000/')
@@ -37,14 +38,21 @@ describe('goes to page', () => {
     cy.contains('Your Progress');
     cy.contains('I want to become a');
     cy.contains('View All Documents');
-    personal_managed_common();
+    personalManagedCommon();
+    cy.get('#profile-button').click();
+    cy.get('#profile-options').contains('Managed');
+    logoutClicked()
   })
+
   it('goes to personal user', () => {
     cy.visit('http://localhost:3000');
     cy.get('#login-button-personal').click();
     cy.wait(500);
     cy.url().should("be.equals", `http://localhost:3000/authed/user/2/dashboard`);
-    personal_managed_common();
+    personalManagedCommon();
+    cy.get('#profile-button').click();
+    cy.get('#profile-options').contains('Personal');
+    logoutClicked()
   })
 })
 

@@ -48,7 +48,7 @@ const userDisplay = computed(() => {
     return {
         profileImg: userV.profile_picture_url,
         profileName: userV.name,
-        profileType: userV.current_organisation?.is_personal ? 'Personal' : 'Managed'
+        profileType: !userV.current_organisation || userV.current_organisation?.is_personal ? 'Personal' : 'Managed'
     }
 })
 const logout = () => {

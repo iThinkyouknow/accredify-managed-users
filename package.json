@@ -7,7 +7,7 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "test": "nuxt test",
+    "test": "NODE_ICU_DATA=node_modules/full-icu nuxt test",
     "cypress:open": "cypress open"
   },
   "devDependencies": {
@@ -21,6 +21,7 @@
     "vitest": "^0.32.2"
   },
   "dependencies": {
+    "full-icu": "^1.5.0",
     "vue3-circle-progress": "^1.0.7",
     "zod": "^3.21.4"
   }

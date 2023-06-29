@@ -1,4 +1,3 @@
 <template>
-    
     <MainContent></MainContent>
 </template>

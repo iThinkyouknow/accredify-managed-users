@@ -1,14 +1,14 @@
-// 29 Jun 2021
+
 const dateTimeOptions = {
     year: 'numeric',
     month: 'short',
     day: 'numeric'
 } satisfies Intl.DateTimeFormatOptions;
 
-const dateTimeFormatter = new Intl.DateTimeFormat(undefined, dateTimeOptions);
 
 export const formatUTCDateTimeStrToddMMMyyyy = (dateStr?: string | null) => {
     if (!dateStr) return '';
+    const dateTimeFormatter = new Intl.DateTimeFormat(undefined, dateTimeOptions);
     return dateTimeFormatter.format(new Date(dateStr));
 }
 
